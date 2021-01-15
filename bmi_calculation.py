@@ -1,6 +1,5 @@
 from convert_units import UnitConversion
-from bmi_category import BmiCategroy
-
+from bmi_riskCategory import BmiCategroy
 
 class Bmi:
     def __init__(self):
@@ -8,8 +7,7 @@ class Bmi:
 
     convert = UnitConversion()
     category = BmiCategroy()
-
-
+        
     def body_fat_percent(self, _gender, _bmi, _age):
         # Adult Body Fat % = (1.20 x BMI) + (0.23 x Age) – (10.8 x gender) – 5.4
         # using gender male = 1, female = 0.
@@ -18,12 +16,7 @@ class Bmi:
         elif _gender[0] == 'F' or _gender[0] == 'f':
             return round(((1.20 * _bmi) + (0.23 * _age) - 5.4), 1)
 
-    def recommend_weight(self, height, unit):
-        weight_range = []
-        height_in_meter = self.convert_to_meter(height, unit)
-        weight_range.append(round((18.5 * (height_in_meter * height_in_meter)), 1))
-        weight_range.append(round((25 * (height_in_meter * height_in_meter)), 1))
-        return weight_range
+
 
     def convert_to_meter(self, height, unit):
         if unit == 'f':
@@ -41,16 +34,10 @@ class Bmi:
             height_in_meter = self.convert.cm_to_meter(height)
             return height_in_meter
 
-    def convert_to_kg(self, weight, unit):
-        if unit == 'k':
-            return weight
-        if unit == 'l':
-            weight_in_kg = self.convert.lb_to_kg(weight)
-            return weight_in_kg
+    
 
-    def calculate_bmi(self, height, height_unit, weight, weight_unit):
+    def calculate_bmi(self, height, height_unit, weight):
         height_in_meter = self.convert_to_meter(height, height_unit)
-        weight_in_kg = self.convert_to_kg(weight, weight_unit)
         bmi = round((weight_in_kg/(height_in_meter * height_in_meter)), 1)
         self.category.bmi_category(bmi)
         return bmi
